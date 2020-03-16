@@ -8,3 +8,4 @@ urllib3
 Werkzeug
 bs4
 gunicorn
+flask-cors
