@@ -16,4 +16,6 @@ def news():
     if request.method == 'GET':
         return jsonify(getNews(request.args.get('category')))
 
-app.run(host='0.0.0.0',port=5000,use_reloader=True,debug=True)
+if __name__ == '__main__':
+    app.debug = True
+    app.run(host='0.0.0.0',port=5000,use_reloader=True)
