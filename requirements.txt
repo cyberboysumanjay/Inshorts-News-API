@@ -7,3 +7,4 @@ requests
 urllib3
 Werkzeug
 bs4
+gunicorn
