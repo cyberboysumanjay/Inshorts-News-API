@@ -94,7 +94,11 @@ Install all dependencies listed in *requirements.txt* file.
     $ python app.py
     ```
 ---
+## Apps using this API
+#### [Telegram Channel](https://t.me/news_inshorts) of Inshorts News
+[![Telegram Channel](https://img.shields.io/badge/Telegram-Channel-orange)](https://t.me/sjprojects)
 
+---
 
 ### You can fork the repo and deploy on VPS or deploy it on Heroku :)  
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cyberboysumanjay/Inshorts-News-API/tree/master)
