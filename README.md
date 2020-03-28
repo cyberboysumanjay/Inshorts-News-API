@@ -96,7 +96,7 @@ Install all dependencies listed in *requirements.txt* file.
 ---
 ## Apps using this API
 #### [Telegram Channel](https://t.me/news_inshorts) of Inshorts News
-[![Telegram Channel](https://img.shields.io/badge/Telegram-Channel-orange)](https://t.me/sjprojects)
+[![Telegram Channel](https://img.shields.io/badge/Telegram-Channel-orange)](https://t.me/news_inshorts)
 
 ---
 
