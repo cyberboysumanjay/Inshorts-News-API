@@ -39,9 +39,9 @@ This API supports category wise news. Here is a complete list of all categories.
 
 Make a get request specifying the category of news you want
 ```
-https://inshortsapi.herokuapp.com/news?category={category_name}
+https://inshortsapi.vercel.app/news?category={category_name}
 ```
-Example - https://inshortsapi.herokuapp.com/news?category=science
+Example - https://inshortsapi.vercel.app/news?category=science
 
 ---
 
@@ -95,7 +95,7 @@ Install all dependencies listed in *requirements.txt* file.
     ```
 ---
 ## Apps using this API
-#### [Telegram Channel](https://t.me/news_inshorts) of Inshorts News
+#### [Telegram Channel](https://telegram.dog/news_inshorts) of Inshorts News
 [![Telegram Channel](https://img.shields.io/badge/Telegram-Channel-orange)](https://t.me/news_inshorts)
 
 ---
