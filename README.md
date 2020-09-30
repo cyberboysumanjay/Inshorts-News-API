@@ -106,6 +106,7 @@ Install all dependencies listed in *requirements.txt* file.
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/cyberboysumanjay/Inshorts-News-API/tree/master)
 
 ---
-#### Star the Repo in case you liked it :)
+#### :star: the Repo in case you liked it :)
+#### Made with :heart: in India
 
 # © [Sumanjay](https://cyberboysumanjay.github.io)
