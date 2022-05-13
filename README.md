@@ -39,9 +39,9 @@ This API supports category wise news. Here is a complete list of all categories.
 
 Make a get request specifying the category of news you want
 ```
-https://inshortsapi.vercel.app/news?category={category_name}
+https://inshorts.deta.dev/news?category={category_name}
 ```
-Example - https://inshortsapi.vercel.app/news?category=science
+Example - https://inshorts.deta.dev/news?category=science
 
 ---
 
@@ -95,9 +95,8 @@ Install all dependencies listed in *requirements.txt* file.
     ```
 ---
 ## Apps using this API
-#### [Telegram Channel](https://telegram.dog/news_inshorts) of Inshorts News
-[![Telegram Channel](https://img.shields.io/badge/Telegram-Channel-orange)](https://t.me/news_inshorts)
-
+#### [Telegram Channel](https://telegram.dog/inshortschannel) of Inshorts News
+[![Telegram Channel](https://img.shields.io/endpoint?color=neon&style=flat-square&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Finshortschannel)](https://telegram.dog/inshortschannel)
 ---
 
 ### You can fork the repo and deploy on VPS, Heroku or Vercel :)  
