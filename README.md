@@ -104,6 +104,7 @@ Install all dependencies listed in *requirements.txt* file.
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/cyberboysumanjay/Inshorts-News-API/tree/master)
 
+[![Deploy](https://button.deta.dev/1/svg)](https://go.deta.dev/deploy?repo=https://github.com/cyberboysumanjay/Inshorts-News-API)
 ---
 #### :star: the Repo in case you liked it :)
 #### Made with :heart: in India

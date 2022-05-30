@@ -1,8 +1,10 @@
-#Coded by Sumanjay on 29th Feb 2020
+# Coded by Sumanjay on 29th Feb 2020
 
 import requests
 from bs4 import BeautifulSoup
 import time
+import uuid
+
 
 def getNews(category):
     newsDictionary = {
@@ -12,8 +14,9 @@ def getNews(category):
     }
 
     try:
-        if category!='all':
-            htmlBody = requests.get('https://www.inshorts.com/en/read/' + category)
+        if category != 'all':
+            htmlBody = requests.get(
+                'https://www.inshorts.com/en/read/' + category)
         else:
             htmlBody = requests.get('https://www.inshorts.com/en/read/')
 
@@ -29,7 +32,7 @@ def getNews(category):
         newsDictionary['error'] = 'Invalid Category'
         return newsDictionary
 
-    for index,card in enumerate(newsCards):
+    for index, card in enumerate(newsCards):
 
         try:
             title = card.find(class_='news-card-title').find('a').text.strip()
@@ -74,6 +77,7 @@ def getNews(category):
             readMoreUrl = None
 
         newsObject = {
+            'id': uuid.uuid4().hex,
             'title': title,
             'imageUrl': imageUrl,
             'url': url,
