@@ -1,8 +1,11 @@
 # Inshorts News API [Unofficial]
+
 ---
+
 This API is capable of fetching news contents from various sources as gathered by Inshorts app.
 
 ---
+
 ### Show some :heart: and :star: the repo to support the project
 
 [![GitHub stars](https://img.shields.io/github/stars/cyberboysumanjay/inshorts-news-api.svg?style=social&label=Star)](https://github.com/cyberboysumanjay/Inshorts-News-API)
@@ -38,16 +41,18 @@ This API supports category wise news. Here is a complete list of all categories.
 ## Usage
 
 Make a get request specifying the category of news you want
+
 ```
 https://inshorts.deta.dev/news?category={category_name}
 ```
+
 Example - https://inshorts.deta.dev/news?category=science
 
 ---
 
 ## Response Format
 
-The response JSON Object looks something like this - 
+The response JSON Object looks something like this -
 
 ```JSON
 {
@@ -77,36 +82,43 @@ The response JSON Object looks something like this -
   "success": true
 }
 ```
+
 ---
+
 ## Setup
 
-Install all dependencies listed in *requirements.txt* file. 
+Install all dependencies listed in _requirements.txt_ file.
 
-1. To install all dependencies run - 
+1. To install all dependencies run -
 
-    ```bash
-    $ sudo -H pip3 install -r requirements.txt
-    ```
+   ```bash
+   $ sudo -H pip3 install -r requirements.txt
+   ```
 
 2. Start the server
 
-    ```bash 
-    $ python app.py
-    ```
----
-## Apps using this API
-#### [Telegram Channel](https://telegram.dog/inshortschannel) of Inshorts News
-[![Telegram Channel](https://img.shields.io/endpoint?color=neon&style=flat-square&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Finshortschannel)](https://telegram.dog/inshortschannel)
+   ```bash
+   $ python app.py
+   ```
+
 ---
 
-### You can fork the repo and deploy on VPS, Heroku or Vercel :)  
+## Apps using this API
+
+#### [Telegram Channel](https://telegram.dog/inshortschannel) of Inshorts News
+
+## [![Telegram Channel](https://img.shields.io/endpoint?color=neon&style=flat-square&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Finshortschannel)](https://telegram.dog/inshortschannel)
+
+### You can fork the repo and deploy on VPS, Heroku or Vercel :)
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cyberboysumanjay/Inshorts-News-API/tree/master)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/cyberboysumanjay/Inshorts-News-API/tree/master)
 
-[![Deploy](https://button.deta.dev/1/svg)](https://go.deta.dev/deploy?repo=https://github.com/cyberboysumanjay/Inshorts-News-API)
 ---
+
 #### :star: the Repo in case you liked it :)
+
 #### Made with :heart: in India
 
 # © [Sumanjay](https://cyberboysumanjay.github.io)
