@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import uuid
+from datetime import datetime
 
 
 def getNews(category):
@@ -85,7 +86,8 @@ def getNews(category):
             'author': author,
             'date': date,
             'time': time,
-            'readMoreUrl': readMoreUrl
+            'readMoreUrl': readMoreUrl,
+            'publishedAt': datetime.strptime(date.split(',')[0] + " " + time.split(' ')[0], '%d %b %Y %H:%M')
         }
 
         newsDictionary['data'].append(newsObject)
