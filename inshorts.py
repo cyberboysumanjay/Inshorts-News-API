@@ -86,8 +86,8 @@ def getNews(category):
             'author': author,
             'date': date,
             'time': time,
-            'readMoreUrl': readMoreUrl
-            'publishedAt': datetime.strptime(date.split(',')[0]+" "+time.split(' ')[0], '%d %b %Y %H:%M')
+            'readMoreUrl': readMoreUrl,
+            'publishedAt': datetime.strptime(date.split(',')[0] + " " + time.split(' ')[0], '%d %b %Y %H:%M')
         }
 
         newsDictionary['data'].append(newsObject)
