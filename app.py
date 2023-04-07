@@ -19,7 +19,7 @@ def news():
             return jsonify({
                 "error": "please add category in query params"
             }), 404
-        return jsonify(getNews(request.args.get('category'))), 200
+        return jsonify(getNews(category)), 200
 
 if __name__ == '__main__':
     app.debug = True
