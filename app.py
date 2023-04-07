@@ -14,7 +14,12 @@ def home():
 @app.route('/news')
 def news():
     if request.method == 'GET':
-        return jsonify(getNews(request.args.get('category')))
+        category = request.args.get("category")
+        if not category:
+            return jsonify({
+                "error": "please add category in query params"
+            }), 404
+        return jsonify(getNews(request.args.get('category'))), 200
 
 if __name__ == '__main__':
     app.debug = True
