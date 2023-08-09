@@ -1,9 +1,28 @@
 # Coded by Sumanjay on 29th Feb 2020
 
+import uuid
 import requests
 from bs4 import BeautifulSoup
-import time
-import uuid
+
+
+def extract_content_from_item_prop(soup, item_prop):
+    if item_prop == 'author':
+        element = soup.find('span', class_=item_prop)
+        text = element.get_text(strip=True)
+    elif item_prop == 'date':
+        element = soup.find(attrs={'clas': item_prop}) #Probably a typo from Inshorts Team
+        text = element.get_text(strip=True)
+    elif item_prop == 'image':
+        span_element = soup.find('span', itemprop=item_prop)
+        meta_element = span_element.find('meta', itemprop='url')
+        return meta_element['content']
+    elif item_prop == 'mainEntityOfPage':
+        span_element = soup.find('span', itemprop=item_prop)
+        return span_element.get('itemid')
+    else:
+        element = soup.find(attrs={'itemprop': item_prop})
+        text = element.get_text(strip=True)
+    return text
 
 
 def getNews(category):
@@ -26,55 +45,54 @@ def getNews(category):
         return newsDictionary
 
     soup = BeautifulSoup(htmlBody.text, 'lxml')
-    newsCards = soup.find_all(class_='news-card')
+    newsCards = soup.find_all(
+        attrs={'itemtype': 'http://schema.org/NewsArticle'})
+
     if not newsCards:
         newsDictionary['success'] = False
         newsDictionary['error'] = 'Invalid Category'
         return newsDictionary
 
-    for index, card in enumerate(newsCards):
+    for card in newsCards:
 
         try:
-            title = card.find(class_='news-card-title').find('a').text.strip()
-        except AttributeError:
+            title = extract_content_from_item_prop(card, 'headline')
+        except Exception:
             title = None
-
         try:
-            imageUrl = card.find(
-                class_='news-card-image')['style'].split("'")[1]
-        except AttributeError:
+            imageUrl = extract_content_from_item_prop(card, 'image')
+        except Exception:
             imageUrl = None
 
         try:
-            url = ('https://www.inshorts.com' + card.find(class_='news-card-title')
-                   .find('a').get('href'))
-        except AttributeError:
+            url = extract_content_from_item_prop(card, 'mainEntityOfPage')
+        except Exception:
             url = None
 
         try:
-            content = card.find(class_='news-card-content').find('div').text
-        except AttributeError:
+            content = extract_content_from_item_prop(card, 'articleBody')
+        except Exception:
             content = None
 
         try:
-            author = card.find(class_='author').text
-        except AttributeError:
+            author = extract_content_from_item_prop(card, 'author')
+        except Exception:
             author = None
 
         try:
-            date = card.find(clas='date').text
-        except AttributeError:
+            date = extract_content_from_item_prop(card, 'date')
+        except Exception:
             date = None
 
         try:
-            time = card.find(class_='time').text
-        except AttributeError:
+            time = extract_content_from_item_prop(card, 'datePublished')
+        except Exception:
             time = None
 
         try:
-            readMoreUrl = card.find(class_='read-more').find('a').get('href')
-        except AttributeError:
-            readMoreUrl = None
+            readMoreUrl = card.find_all('div')[-1].find('a')['href']
+        except Exception:
+            readMoreUrl = url
 
         newsObject = {
             'id': uuid.uuid4().hex,
@@ -87,7 +105,5 @@ def getNews(category):
             'time': time,
             'readMoreUrl': readMoreUrl
         }
-
         newsDictionary['data'].append(newsObject)
-
     return newsDictionary
