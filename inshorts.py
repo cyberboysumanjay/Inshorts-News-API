@@ -1,98 +1,73 @@
 # Coded by Sumanjay on 29th Feb 2020
-
+import datetime
 import uuid
 import requests
-from bs4 import BeautifulSoup
+import pytz
 
+ist = pytz.timezone('Asia/Kolkata')
+headers = {
+    'authority': 'inshorts.com',
+    'accept': '*/*',
+    'accept-language': 'en-GB,en;q=0.5',
+    'content-type': 'application/json',
+    'referer': 'https://inshorts.com/en/read',
+    'sec-ch-ua': '"Not/A)Brand";v="99", "Brave";v="115", "Chromium";v="115"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"macOS"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'sec-gpc': '1',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+}
 
-def extract_content_from_item_prop(soup, item_prop):
-    if item_prop == 'author':
-        element = soup.find('span', class_=item_prop)
-        text = element.get_text(strip=True)
-    elif item_prop == 'date':
-        element = soup.find(attrs={'clas': item_prop}) #Probably a typo from Inshorts Team
-        text = element.get_text(strip=True)
-    elif item_prop == 'image':
-        span_element = soup.find('span', itemprop=item_prop)
-        meta_element = span_element.find('meta', itemprop='url')
-        return meta_element['content']
-    elif item_prop == 'mainEntityOfPage':
-        span_element = soup.find('span', itemprop=item_prop)
-        return span_element.get('itemid')
-    else:
-        element = soup.find(attrs={'itemprop': item_prop})
-        text = element.get_text(strip=True)
-    return text
+params = (
+    ('category', 'top_stories'),
+    ('max_limit', '10'),
+    ('include_card_data', 'true')
+)
 
 
 def getNews(category):
+    # https://inshorts.com/api/en/news?category=top_stories&max_limit=10&include_card_data=true
+
+    if category == 'all':
+        response = requests.get(
+            'https://inshorts.com/api/en/news?category=top_stories&max_limit=10&include_card_data=true')
+    else:
+        response = requests.get(
+            f'https://inshorts.com/api/en/search/trending_topics/{category}', headers=headers, params=params)
+    print(response.status_code)
+    try:
+        news_data = response.json()['data']['news_list']
+    except Exception as e:
+        print(response.text)
+        news_data = None
+
     newsDictionary = {
         'success': True,
         'category': category,
         'data': []
     }
 
-    try:
-        if category != 'all':
-            htmlBody = requests.get(
-                'https://www.inshorts.com/en/read/' + category)
-        else:
-            htmlBody = requests.get('https://www.inshorts.com/en/read/')
-
-    except requests.exceptions.RequestException as e:
-        newsDictionary['success'] = False
-        newsDictionary['error'] = str(e.message)
-        return newsDictionary
-
-    soup = BeautifulSoup(htmlBody.text, 'lxml')
-    newsCards = soup.find_all(
-        attrs={'itemtype': 'http://schema.org/NewsArticle'})
-
-    if not newsCards:
-        newsDictionary['success'] = False
+    if not news_data:
+        newsDictionary['success'] = response.json()['error']
         newsDictionary['error'] = 'Invalid Category'
         return newsDictionary
 
-    for card in newsCards:
-
-        try:
-            title = extract_content_from_item_prop(card, 'headline')
-        except Exception:
-            title = None
-        try:
-            imageUrl = extract_content_from_item_prop(card, 'image')
-        except Exception:
-            imageUrl = None
-
-        try:
-            url = extract_content_from_item_prop(card, 'mainEntityOfPage')
-        except Exception:
-            url = None
-
-        try:
-            content = extract_content_from_item_prop(card, 'articleBody')
-        except Exception:
-            content = None
-
-        try:
-            author = extract_content_from_item_prop(card, 'author')
-        except Exception:
-            author = None
-
-        try:
-            date = extract_content_from_item_prop(card, 'date')
-        except Exception:
-            date = None
-
-        try:
-            time = extract_content_from_item_prop(card, 'datePublished')
-        except Exception:
-            time = None
-
-        try:
-            readMoreUrl = card.find_all('div')[-1].find('a')['href']
-        except Exception:
-            readMoreUrl = url
+    for entry in news_data:
+        news = entry['news_obj']
+        author = news['author_name']
+        title = news['title']
+        imageUrl = news['image_url']
+        url = news['shortened_url']
+        content = news['content']
+        timestamp = news['created_at'] / 1000
+        dt_object = datetime.datetime.fromtimestamp(timestamp)
+        ist_dt_object = ist.localize(dt_object)
+        date = ist_dt_object.strftime('%A, %d %B, %Y')
+        time = ist_dt_object.strftime('%I:%M %p').lower()
+        readMoreUrl = news['source_url']
 
         newsObject = {
             'id': uuid.uuid4().hex,

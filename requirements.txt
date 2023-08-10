@@ -9,3 +9,4 @@ Werkzeug
 bs4
 gunicorn
 flask-cors
+pytz
