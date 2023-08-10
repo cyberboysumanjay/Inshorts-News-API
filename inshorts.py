@@ -4,7 +4,7 @@ import uuid
 import requests
 import pytz
 
-ist = pytz.timezone('Asia/Kolkata')
+
 headers = {
     'authority': 'inshorts.com',
     'accept': '*/*',
@@ -29,15 +29,12 @@ params = (
 
 
 def getNews(category):
-    # https://inshorts.com/api/en/news?category=top_stories&max_limit=10&include_card_data=true
-
     if category == 'all':
         response = requests.get(
-            'https://inshorts.com/api/en/news?category=top_stories&max_limit=10&include_card_data=true')
+            'https://inshorts.com/api/en/news?category=all_news&max_limit=10&include_card_data=true')
     else:
         response = requests.get(
             f'https://inshorts.com/api/en/search/trending_topics/{category}', headers=headers, params=params)
-    print(response.status_code)
     try:
         news_data = response.json()['data']['news_list']
     except Exception as e:
@@ -63,10 +60,13 @@ def getNews(category):
         url = news['shortened_url']
         content = news['content']
         timestamp = news['created_at'] / 1000
-        dt_object = datetime.datetime.fromtimestamp(timestamp)
-        ist_dt_object = ist.localize(dt_object)
-        date = ist_dt_object.strftime('%A, %d %B, %Y')
-        time = ist_dt_object.strftime('%I:%M %p').lower()
+        dt_utc = datetime.datetime.utcfromtimestamp(timestamp)
+        tz_utc = pytz.timezone('UTC')
+        dt_utc = tz_utc.localize(dt_utc)
+        tz_ist = pytz.timezone('Asia/Kolkata')
+        dt_ist = dt_utc.astimezone(tz_ist)
+        date = dt_ist.strftime('%A, %d %B, %Y')
+        time = dt_ist.strftime('%I:%M %p').lower()
         readMoreUrl = news['source_url']
 
         newsObject = {
