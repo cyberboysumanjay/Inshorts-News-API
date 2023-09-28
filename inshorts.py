@@ -53,32 +53,35 @@ def getNews(category):
         return newsDictionary
 
     for entry in news_data:
-        news = entry['news_obj']
-        author = news['author_name']
-        title = news['title']
-        imageUrl = news['image_url']
-        url = news['shortened_url']
-        content = news['content']
-        timestamp = news['created_at'] / 1000
-        dt_utc = datetime.datetime.utcfromtimestamp(timestamp)
-        tz_utc = pytz.timezone('UTC')
-        dt_utc = tz_utc.localize(dt_utc)
-        tz_ist = pytz.timezone('Asia/Kolkata')
-        dt_ist = dt_utc.astimezone(tz_ist)
-        date = dt_ist.strftime('%A, %d %B, %Y')
-        time = dt_ist.strftime('%I:%M %p').lower()
-        readMoreUrl = news['source_url']
+        try:
+            news = entry['news_obj']
+            author = news['author_name']
+            title = news['title']
+            imageUrl = news['image_url']
+            url = news['shortened_url']
+            content = news['content']
+            timestamp = news['created_at'] / 1000
+            dt_utc = datetime.datetime.utcfromtimestamp(timestamp)
+            tz_utc = pytz.timezone('UTC')
+            dt_utc = tz_utc.localize(dt_utc)
+            tz_ist = pytz.timezone('Asia/Kolkata')
+            dt_ist = dt_utc.astimezone(tz_ist)
+            date = dt_ist.strftime('%A, %d %B, %Y')
+            time = dt_ist.strftime('%I:%M %p').lower()
+            readMoreUrl = news['source_url']
 
-        newsObject = {
-            'id': uuid.uuid4().hex,
-            'title': title,
-            'imageUrl': imageUrl,
-            'url': url,
-            'content': content,
-            'author': author,
-            'date': date,
-            'time': time,
-            'readMoreUrl': readMoreUrl
-        }
-        newsDictionary['data'].append(newsObject)
+            newsObject = {
+                'id': uuid.uuid4().hex,
+                'title': title,
+                'imageUrl': imageUrl,
+                'url': url,
+                'content': content,
+                'author': author,
+                'date': date,
+                'time': time,
+                'readMoreUrl': readMoreUrl
+            }
+            newsDictionary['data'].append(newsObject)
+        except Exception:
+            print(entry)
     return newsDictionary
